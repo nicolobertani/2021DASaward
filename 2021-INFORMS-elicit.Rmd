@@ -196,5 +196,5 @@ Manuscript available on SSRN:
 <div style="text-align: center; font-size: 18px">
 Presentation available on GitHub:
 
-[https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3569625](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3569625)
+[https://github.com/nicolobertani/2021DASaward](https://github.com/nicolobertani/2021DASaward)
 </div>
