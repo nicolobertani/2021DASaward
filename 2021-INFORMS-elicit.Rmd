@@ -1,0 +1,200 @@
+---
+# title: "2021-INFORMS"
+# subtitle: "asd"
+# author: "Nicolò Bertani"
+# date: "10/18/2021"
+output: 
+  ioslides_presentation:
+    incremental: false
+    widescreen: true
+    # smaller: true
+    transition: 0
+    css: style.css
+    self_contained: true
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r includes}
+setwd("~/OneDrive - ucp.pt/Shared Working Directory - ED, NB/ELICIT EXPERIMENT/R code and deliverables")
+source("../Helper functions/M-spline and I-spline.R")
+source("../Helper functions/Helper functions for data analysis.R")
+
+cols <- c(
+  rgb(.8,0,0),
+  rgb(26/255,48/255,132/255),
+  rgb(0,.6,0))
+
+cols2 <- c(
+  'steelblue',
+  'orange',
+  'springgreen4',
+  'darkred',
+  'dodgerblue'
+)
+
+cols3 <- c(
+  'skyblue',
+  'hotpink',
+  'chartreuse2'
+)
+```
+
+
+## Overview {.build .overview}
+
+As experimenters, we often desire **faster** and **simpler** elicitation procedures that remain as **reliable** as longer alternatives.
+
+We devise a fast and simple procedure, using simple geometric intuition to shorten questioning.
+
+We suggest a functional form that is as tractable as the Neo-Additive, while improving descriptiveness over previous forms.
+
+We validate our procedure by eliciting probability weighting in the lab.
+
+
+
+
+## Central idea {.build}
+
+Suppose I want to elicit a decision-theoretic function (utility, probability weighting, ...).
+
+Can we iteratively incorporate preferences provided by a respondent to update our information and ask optimal questions? 
+
+Some procedures take a Bayesian approach and update parameter distributions (e.g. Cavagnaro et alii 2013).
+
+Differently, we:
+
+- reduce the space where the itself function can lie, by defining and updating bounds on it.
+- formulate this problem as an optimization problem.
+
+In particular, here we consider Yaari's model (1987) and elicit the probability weighting function.
+
+
+
+
+## Elicitation as an optimization problem {.build}
+
+At every point in the support, we want to find the minimal or maximal value the function can take.
+
+Thus, at every point, the upper bound can be defined as the solution to:
+$$
+\begin{align}
+& \underset{}{\max} & & \text{function} 
+\\
+& \text{subject to} & & \text{functional assumptions (e.g. monotonicity)}
+\\
+& & & \text{previously collected preferences}
+\end{align}
+$$
+
+<br>
+The optimal question bisects the maximal distance between the upper and lower bound on the function.
+
+The procedure iteratively updates the bounds and asks the optimal question.
+
+
+
+## Functional form {.smaller .build}
+
+For almost all standard functional forms, the optimization problem underlying the bounds cannot be solved.
+
+We define the function as a convex combination of Integrated Spline bases. 
+
+```{r splines, fig.align='center', fig.width=9, fig.height=3.6}
+helper <- seq(0, 1, .01)
+chosen.xi <- c(.1, .9)
+order <- 3
+m <- length(M_knots_sequence(order, chosen.xi)) - order
+examples_lambda <- list(c(.2, .2, .2, .2, .2), 
+                     c(.4, .3, .2, .1, 0),
+                     c(0, .1, .2, .3, .4))
+spline_bases <- I_spline(helper, order, interior_knots = chosen.xi, individual = T)
+spline_examples <- sapply(examples_lambda, function(l) I_spline(helper, order, interior_knots = chosen.xi, individual = F, lambdas = l))
+
+par(
+  mfrow = c(1, 2),
+  xpd = T,
+  mar = c(3.2, 3, 1.6, 0),
+  oma = c(0, 0, 0, 0) + .1,
+  xaxs = "i",
+  yaxs = "i",
+  pty = "s"
+)
+
+s()
+for (i in seq(ncol(spline_bases))) {
+  lines(spline_bases[, i] ~ helper, col = cols2[i], lw = 3)
+}
+mtext(expression(p), 1, 2.4, cex = 1.2)
+mtext(expression(w(p)), 2, 2, cex = 1.2)
+mtext('Ispline bases', 3, .6, cex = 1.2, font = 2)
+
+s()
+for (i in seq(ncol(spline_examples))) {
+  lines(spline_examples[, i] ~ helper, col = cols3[i], lw = 3)
+}
+mtext(expression(p), 1, 2.4, cex = 1.2)
+mtext(expression(w(p)), 2, 2, cex = 1.2)
+mtext('Examples of combinations', 3, .6, cex = 1.2, font = 2)
+# 
+```
+
+Based on this functional form, the bounds can be found using solvable linear programs (LPs).
+
+
+
+
+
+## The procedure at work
+
+```{r}
+shinyAppFile("elicit/app.R")
+```
+
+
+
+## Procedure performance {.build}
+
+Updates take about half a second to compute.
+
+Experimentally, a function is elicited with 10 binary choices on average.
+
+Experiments last on average 6.5 minutes, including instructions.
+
+
+
+## Thank you
+
+&nbsp;
+<div style="font-weight:bold; font-size: xx-large; text-align:center;">
+</div>
+&nbsp;
+<div style="font-weight:bold; font-size: xx-large; text-align:center;">
+</div>
+&nbsp;
+<div style="font-weight:bold; font-size: xx-large; text-align:center;">
+</div>
+&nbsp;
+<div style="font-weight:bold; font-size: xx-large; text-align:center;">
+</div>
+&nbsp;
+<div style="font-weight:bold; font-size: xx-large; text-align:center;">
+</div>
+&nbsp;
+<div style="font-weight:bold; font-size: xx-large; text-align:center;">
+</div>
+&nbsp;
+<div style="text-align: center; font-size: 18px">
+Manuscript available on SSRN:
+
+[https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3569625](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3569625)
+</div>
+&nbsp;
+<div style="text-align: center; font-size: 18px">
+Presentation available on GitHub:
+
+[https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3569625](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3569625)
+</div>

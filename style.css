@@ -1,0 +1,25 @@
+slides > slide {
+  background: white;
+  color: black;
+}
+
+slides > slide.title-slide hgroup h1 {
+  font-weight: bold;
+  font-size: 24pt;
+  color: red;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+slides > slide.title-slide {
+  background: black;
+  background-image: url("title-slide.jpeg");
+  background-position: center;
+  background-size: cover;
+}
+
+h2 {
+  color: black;
+}
