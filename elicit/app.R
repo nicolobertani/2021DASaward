@@ -15,12 +15,9 @@ cols <- c(
   rgb(0,.6,0))
 
 SVM.fit <- function(qs) {
-  # qs <- rbind(qs, c(0, 120, 1, 1), c(1, 0, 0, 0))
   qs$s <- ifelse(as.numeric(qs$s) == 1, 1, -1)
-  print(qs)
   X <- qs$w.p - I_spline(qs$p.x, order, interior_knots = chosen.xi, individual = T)
   X <- X * qs$s
-  print(X)
   ## setup of constraints
   D <- matrix(0, ncol(X), ncol(X))
   diag(D) <- 1
@@ -36,7 +33,10 @@ SVM.fit <- function(qs) {
   )
   ## solution
   mod <- quadprog::solve.QP(Dmat = D, dvec = d, Amat = A, bvec = b)
-  return (mod$solution / sum(mod$solution))
+  return (list(
+    mod$solution / sum(mod$solution),
+    mod$Lagrangian[-(1:m)] > 0
+    ))
 }
 
 helper <- seq(0, 1, .01)
@@ -393,8 +393,14 @@ server <- function(input, output, session) {
       points(helper, upper_bound, type = 'l', 
              col = ggplot2::alpha(cols[2], .8), lwd = 2, lty = 1)
       ## add fit
-      points(helper, I_spline(helper, order, chosen.xi, SVM.fit(sim.answers)), 
-             type = 'l', col = 'grey40', lwd = 2, lty = 3)
+      model.fit <- SVM.fit(sim.answers)
+      points(helper, I_spline(helper, order, chosen.xi, model.fit[[1]]), 
+             type = 'l', col = 'grey40', lwd = 3, lty = 2)
+      ## add support vectors
+      with(sim.answers[model.fit[[2]], ], 
+           points(w.p ~ p.x, 
+                  xlim = c(0,1), ylim = c(0,1), pch = 21,
+                  col = cols[1 + s], bg = 'white', lwd = 2, cex = 1.4))
       # axis labels 
       mtext(expression(p), 1, 2, cex = 1.2)
       mtext(expression(w(p)), 2, 2, cex = 1.2)
