@@ -50,7 +50,7 @@ As experimenters, we often desire **faster** and **simpler** elicitation procedu
 
 We devise a fast and simple procedure, using simple geometric intuition to shorten questioning.
 
-We suggest a functional form that is as tractable as the Neo-Additive, while improving descriptiveness over previous forms.
+We suggest a functional form that is very tractable and improves descriptiveness over standard parametric forms.
 
 We validate our procedure by eliciting probability weighting in the lab.
 
@@ -59,7 +59,7 @@ We validate our procedure by eliciting probability weighting in the lab.
 
 ## Central idea {.build}
 
-Suppose I want to elicit a decision-theoretic function (utility, probability weighting, ...).
+<!-- Suppose I want to elicit a decision-theoretic function (utility, probability weighting, ...). -->
 
 Can we iteratively incorporate preferences provided by a respondent to update our information and ask optimal questions? 
 
@@ -70,7 +70,7 @@ Differently, we:
 - reduce the space where the itself function can lie, by defining and updating bounds on it.
 - formulate this problem as an optimization problem.
 
-In particular, here we consider Yaari's model (1987) and elicit the probability weighting function.
+<!-- In particular, here we consider Yaari's model (1987) and elicit the probability weighting function. -->
 
 
 
@@ -156,13 +156,17 @@ shinyAppFile("elicit/app.R")
 
 
 
-## Procedure performance {.build}
+## Benefits of the procedure {.build}
 
-Updates take about half a second to compute.
+This is an adaptive procedure that is fast and simple both technologically and experimentally:
 
-Experimentally, a function is elicited with 10 binary choices on average.
+- LP updates take about half a second to compute.
 
-Experiments last on average 6.5 minutes, including instructions.
+- Experimentally, a function is elicited with 10 binary choices on average.
+
+- Experiments last on average 6.5 minutes, including instructions.
+
+In the paper, we leverage the descriptive properties of our functional form to reconsider the prevalence of possibility and certainty effects.
 
 
 

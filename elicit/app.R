@@ -284,6 +284,10 @@ server <- function(input, output, session) {
       par(fig = c(0, 1, 0, separator), new = T, 
           oma = c(0, 0, 0, 0), mar = c(3, 3, 0.6, 0) + .1, xaxs = "i", yaxs = "i", pty = "s")
       s()
+      # with(sim.answers,
+      #      points(w.p ~ p.x,
+      #             xlim = c(0,1), ylim = c(0,1), pch = 19,
+      #             col = cols[1 + s]))
       # add next question
       if (rv$keep.questioning) {
         points(sim.answers[iteration, ]$p.x, sim.answers[iteration, ]$w.p, col = gray(.5), pch = 19)
