@@ -166,7 +166,11 @@ This is an adaptive procedure that is fast and simple both technologically and e
 
 - Experiments last on average 6.5 minutes, including instructions.
 
-In the paper, we leverage the descriptive properties of our functional form to reconsider the prevalence of possibility and certainty effects.
+In the paper, 
+
+- reproduce empirical regularities.
+
+- leverage the descriptive properties of our functional form to reconsider the prevalence of possibility and certainty effects.
 
 
 
