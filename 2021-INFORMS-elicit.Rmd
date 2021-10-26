@@ -46,29 +46,31 @@ cols3 <- c(
 
 ## Overview {.build .overview}
 
-As experimenters, we often desire **faster** and **simpler** elicitation procedures that remain as **reliable** as longer alternatives.
+As experimenters, we often desire **faster** and **simpler** elicitation procedures that remain as **accurate** and **reliable** as longer alternatives.
 
 We devise a fast and simple procedure, using simple geometric intuition to shorten questioning.
 
-We suggest a functional form that is very tractable and improves descriptiveness over standard parametric forms.
+We suggest a functional form that is very **tractable** and **improves descriptiveness** over standard parametric forms.
 
-We validate our procedure by eliciting probability weighting in the lab.
+We validate our procedure by eliciting **probability weighting** in the lab.
 
-
-
+<div class="notes">
+- probability weighting or transformation is one of the most robust deviations from the normative standard of expected utility.
+- in particular, in this study we elicit Yaari's dual model. For those who are less familiar with this model, you can think about it as PT in the gains domain with linear utility.
+</div>
 
 ## Central idea {.build}
 
 <!-- Suppose I want to elicit a decision-theoretic function (utility, probability weighting, ...). -->
 
-Can we iteratively incorporate preferences provided by a respondent to update our information and ask optimal questions? 
+Can we **iteratively** incorporate preferences provided by a respondent to **update** our information and ask optimal questions? 
 
-Some procedures take a Bayesian approach and update parameter distributions (e.g. Cavagnaro et alii 2013).
+Some procedures take a Bayesian approach and update parameter distributions (e.g. Cavagnaro et alii, 2013).
 
 Differently, we:
 
-- reduce the space where the itself function can lie, by defining and updating bounds on it.
-- formulate this problem as an optimization problem.
+- **reduce the space** where the itself function can lie, by defining and updating **bounds** on the function.
+- formulate this problem as an **optimization** problem.
 
 <!-- In particular, here we consider Yaari's model (1987) and elicit the probability weighting function. -->
 
@@ -77,9 +79,9 @@ Differently, we:
 
 ## Elicitation as an optimization problem {.build}
 
-At every point in the support, we want to find the minimal or maximal value the function can take.
+At every point in the support, we want to find the **minimal or maximal value** the function can take (i.e. its bounds).
 
-Thus, at every point, the upper bound can be defined as the solution to:
+The upper **bound** can be defined as the **solution**, at every point, to:
 $$
 \begin{align}
 & \underset{}{\max} & & \text{function} 
@@ -91,17 +93,17 @@ $$
 $$
 
 <br>
-The optimal question bisects the maximal distance between the upper and lower bound on the function.
+Then, the **optimal question bisects** the maximal **distance** between the bounds on the function.
 
-The procedure iteratively updates the bounds and asks the optimal question.
+The procedure iteratively updates the bounds and asks the optimal question. It stops when the distance is reduced below some threshold over the entire support.
 
 
 
 ## Functional form {.smaller .build}
 
-For almost all standard functional forms, the optimization problem underlying the bounds cannot be solved.
+For most standard functional forms, the optimization problem underlying the bounds cannot be solved.
 
-We define the function as a convex combination of Integrated Spline bases. 
+We define the function as a **convex combination** of Integrated Spline bases. 
 
 ```{r splines, fig.align='center', fig.width=9, fig.height=3.6}
 helper <- seq(0, 1, .01)
@@ -158,7 +160,7 @@ shinyAppFile("elicit/app.R")
 
 ## Benefits of the procedure {.build}
 
-This is an adaptive procedure that is fast and simple both technologically and experimentally:
+This is an adaptive procedure that is **fast and simple both technologically and experimentally**:
 
 - LP updates take about half a second to compute.
 
@@ -170,7 +172,7 @@ In the paper,
 
 - reproduce empirical regularities.
 
-- leverage the descriptive properties of our functional form to reconsider the prevalence of possibility and certainty effects.
+- **leverage the descriptive properties** of our functional form to reconsider the prevalence of possibility and certainty effects.
 
 
 
